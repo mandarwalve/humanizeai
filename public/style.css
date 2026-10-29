@@ -1,0 +1,94 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+#outputText {
+    transition: all 0.2s ease-in-out;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+#outputText::-webkit-scrollbar,
+#inputText::-webkit-scrollbar {
+    width: 6px;
+}
+
+#outputText::-webkit-scrollbar-thumb,
+#inputText::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+#outputText.active {
+    font-style: normal;
+    color: #0f172a;
+    background-color: #ffffff;
+}
+
+/* Streaming cursor */
+@keyframes streamPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.streaming-cursor::after {
+    content: "▋";
+    display: inline-block;
+    color: #4f46e5;
+    animation: streamPulse 0.8s infinite;
+    margin-left: 2px;
+}
+
+/* ========================================================
+   STRICT PITCH BLACK & WHITE DARK THEME (NO OTHER COLOUR)
+   ======================================================== */
+html.dark {
+    color-scheme: dark;
+    background-color: #000000 !important;
+}
+
+html.dark body {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+html.dark textarea::placeholder {
+    color: #525252 !important;
+}
+
+html.dark #outputText {
+    scrollbar-color: #333333 #000000;
+    background-color: #000000 !important;
+    border-color: #262626 !important;
+}
+
+html.dark #outputText::-webkit-scrollbar-track,
+html.dark #inputText::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+html.dark #outputText::-webkit-scrollbar-thumb,
+html.dark #inputText::-webkit-scrollbar-thumb {
+    background: #333333;
+}
+
+html.dark #inputText {
+    background-color: #000000 !important;
+    border-color: #262626 !important;
+    color: #ffffff !important;
+}
+
+html.dark #outputText.active {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+
+html.dark .streaming-cursor::after {
+    color: #ffffff !important;
+}

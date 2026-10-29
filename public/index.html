@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HumanizeAI | Transform AI Content into Natural Human Writing</title>
+    <meta name="description" content="Instantly convert robotic AI text, essays, code, and emails into fluid, natural human writing.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-indigo-50/20 to-slate-100 dark:bg-black dark:from-black dark:via-black dark:to-black text-slate-900 dark:text-white font-['Inter'] min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+    <!-- Navigation -->
+    <nav class="flex items-center justify-between px-6 md:px-8 py-5 max-w-7xl mx-auto w-full">
+        <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-indigo-600 dark:bg-white flex items-center justify-center text-white dark:text-black font-black text-xl shadow-md shadow-indigo-200 dark:shadow-none">
+                H
+            </div>
+            <div class="text-2xl font-extrabold tracking-tight text-indigo-600 dark:text-white">Humanize<span class="text-slate-900 dark:text-white">AI</span></div>
+        </div>
+        <div class="flex items-center gap-3 md:gap-4">
+            <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-black text-emerald-700 dark:text-white border border-emerald-200 dark:border-neutral-800">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-white animate-pulse"></span>
+                System Operational
+            </span>
+
+            <!-- Dark Mode Toggle Button -->
+            <button id="themeToggle" type="button" aria-label="Toggle dark mode" class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-neutral-800 bg-white dark:bg-black text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-neutral-900 transition cursor-pointer shadow-sm">
+                <!-- Moon icon (shown in light mode) -->
+                <svg id="moonIcon" class="w-4 h-4 text-slate-600 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+                <!-- Sun icon (hidden in light mode, shown in dark mode) -->
+                <svg id="sunIcon" class="w-4 h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span id="themeToggleText" class="hidden md:inline">Dark Mode</span>
+            </button>
+
+            <a href="#toolSection" class="bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 text-xs md:text-sm font-semibold px-4 py-2 rounded-xl transition shadow-sm hover:shadow-indigo-200 dark:hover:shadow-none">
+                Try Now Free
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Cleaned: announcement, badge, and subtitle removed) -->
+    <header class="text-center px-4 pt-8 pb-8 max-w-4xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
+            Stop sounding like a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:bg-none dark:text-white">robot.</span>
+        </h1>
+    </header>
+
+    <!-- Tool Section -->
+    <main id="toolSection" class="max-w-7xl mx-auto px-4 pb-16 w-full flex-1">
+        <!-- Controls Bar -->
+        <div class="bg-white dark:bg-black rounded-2xl shadow-sm border border-slate-200 dark:border-neutral-800 p-4 mb-6 flex flex-wrap items-center justify-between gap-4 transition-colors">
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <label for="contentType" class="text-xs font-semibold text-slate-500 dark:text-neutral-400 uppercase tracking-wider">Type:</label>
+                    <select id="contentType" class="text-sm font-medium border border-slate-200 dark:border-neutral-800 rounded-lg px-3 py-1.5 bg-slate-50 dark:bg-black text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-neutral-900 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-white outline-none transition cursor-pointer">
+                        <option value="text">General Text & Essays</option>
+                        <option value="code">Programming Code</option>
+                        <option value="email">Professional Email</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <label for="contentTone" class="text-xs font-semibold text-slate-500 dark:text-neutral-400 uppercase tracking-wider">Tone:</label>
+                    <select id="contentTone" class="text-sm font-medium border border-slate-200 dark:border-neutral-800 rounded-lg px-3 py-1.5 bg-slate-50 dark:bg-black text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-neutral-900 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-white outline-none transition cursor-pointer">
+                        <option value="natural">Natural & Conversational</option>
+                        <option value="casual">Casual & Friendly</option>
+                        <option value="academic">Academic & Scholarly</option>
+                        <option value="creative">Creative & Engaging</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button id="sampleBtn" type="button" class="text-xs font-medium text-slate-600 dark:text-white hover:text-indigo-600 dark:hover:text-white bg-slate-100 dark:bg-black hover:bg-indigo-50 dark:hover:bg-neutral-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-neutral-800 transition flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Load Sample
+                </button>
+                <button id="clearBtn" type="button" class="text-xs font-medium text-slate-500 dark:text-neutral-400 hover:text-rose-600 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-neutral-900 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-neutral-800 transition cursor-pointer">
+                    Clear All
+                </button>
+            </div>
+        </div>
+
+        <!-- Split View Workspaces -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            <!-- Input Panel -->
+            <div class="bg-white dark:bg-black p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-neutral-800 flex flex-col justify-between transition-colors">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 dark:bg-white"></span>
+                            <label for="inputText" class="font-bold text-slate-800 dark:text-white text-base">AI Generated Content</label>
+                        </div>
+                        <span id="inputStats" class="text-xs text-slate-400 dark:text-neutral-400 font-medium">0 words • 0 chars</span>
+                    </div>
+
+                    <div class="relative">
+                        <textarea id="inputText" placeholder="Paste your AI text here..." class="w-full h-80 p-4 rounded-xl border border-slate-200 dark:border-neutral-800 bg-white dark:bg-black text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-neutral-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-white focus:border-indigo-500 dark:focus:border-white outline-none resize-none transition leading-relaxed font-normal"></textarea>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-2">
+                    <button id="humanizeBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 dark:active:bg-neutral-300 font-semibold py-4 rounded-xl transition shadow-md hover:shadow-indigo-200 dark:hover:shadow-none flex items-center justify-center gap-2 text-base cursor-pointer">
+                        <svg class="w-5 h-5 text-white dark:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <span id="btnText">Humanize Content</span>
+                        <svg id="loader" class="hidden animate-spin h-5 w-5 text-white dark:text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                    <div class="flex items-center justify-between text-xs text-slate-400 dark:text-neutral-400 mt-2.5 px-1">
+                        <span>Typical speed: 1 - 2 seconds</span>
+                        <span id="speedMetric" class="text-indigo-600 dark:text-white font-medium">Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="bg-white dark:bg-black p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-neutral-800 flex flex-col justify-between transition-colors">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-white"></span>
+                            <label class="font-bold text-slate-800 dark:text-white text-base">Humanized Result</label>
+                            <span id="humanScoreBadge" class="hidden text-[11px] font-semibold bg-emerald-100 dark:bg-black text-emerald-800 dark:text-white px-2 py-0.5 rounded-full border border-emerald-200 dark:border-white">
+                                99% Human Score
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span id="outputStats" class="text-xs text-slate-400 dark:text-neutral-400 font-medium">0 words</span>
+                            <button id="copyBtn" class="text-xs font-semibold text-indigo-600 dark:text-white hover:text-indigo-800 dark:hover:text-white bg-indigo-50 dark:bg-black hover:bg-indigo-100 dark:hover:bg-neutral-900 px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-neutral-800 transition flex items-center gap-1 cursor-pointer">
+                                <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                <span id="copyBtnLabel">Copy Text</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div id="outputText" class="w-full h-80 p-4 rounded-xl border border-slate-200 dark:border-neutral-800 bg-slate-50 dark:bg-black overflow-auto whitespace-pre-wrap text-slate-400 dark:text-neutral-500 italic font-normal leading-relaxed">Your humanized content will appear here instantly...</div>
+                        <div id="streamingGlow" class="hidden absolute bottom-3 right-4 flex items-center gap-1.5 text-xs text-indigo-600 dark:text-white font-medium bg-white/90 dark:bg-black/90 backdrop-blur-sm px-2.5 py-1 rounded-full border border-indigo-100 dark:border-neutral-800 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-indigo-600 dark:bg-white animate-ping"></span>
+                            Streaming words...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-2">
+                    <div class="p-3.5 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:bg-none dark:bg-black border border-indigo-100/70 dark:border-neutral-800 text-xs text-indigo-900 dark:text-neutral-300 flex items-start gap-2.5">
+                        <svg class="w-5 h-5 text-indigo-600 dark:text-white shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <div>
+                            <span class="font-bold text-slate-900 dark:text-white">Human Cadence Engine:</span> Dynamically adjusts sentence burstiness, strips robotic filler phrases, and preserves 100% of factual context.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-200 dark:border-neutral-900 bg-white dark:bg-black py-6 text-center text-xs text-slate-500 dark:text-neutral-400 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+                &copy; 2026 <strong>HumanizeAI</strong>. Built with Express, TailwindCSS & Google Gemini API.
+            </div>
+            <div class="flex items-center gap-4 text-slate-400 dark:text-neutral-500">
+                <span>Fast AI Detection Bypass</span>
+                <span>•</span>
+                <span>Burstiness Optimization</span>
+                <span>•</span>
+                <span>Zero Latency Architecture</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
