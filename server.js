@@ -12,7 +12,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Initialize Gemini Client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+if (!process.env.GEMINI_API_KEY) {
+  console.warn('\n⚠️ WARNING: GEMINI_API_KEY is not defined in environment variables! Remember to set it in your deployment dashboard.\n');
+}
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // Primary and fallback models for high speed & zero downtime
 const PRIMARY_MODEL = 'gemini-3.5-flash-lite';
@@ -81,6 +84,13 @@ app.post('/api/humanize-stream', async (req, res) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
+  if (!process.env.GEMINI_API_KEY) {
+    sendEvent('error', { 
+      message: 'GEMINI_API_KEY is not set in your hosting platform dashboard. Go to your deployment settings -> Environment Variables -> Add GEMINI_API_KEY.' 
+    });
+    return res.end();
+  }
+
   const systemInstruction = getSystemPrompt(type, tone);
   const prompt = `Rewrite the following ${type} to be completely human:\n\n${text.trim()}`;
 
@@ -101,7 +111,10 @@ app.post('/api/humanize-stream', async (req, res) => {
       streamResult = await activeModel.generateContentStream(prompt);
     } catch (fallbackErr) {
       console.error('All models failed:', fallbackErr);
-      sendEvent('error', { message: 'Failed to humanize text. Please verify API key or try again.' });
+      const errorMsg = fallbackErr.message && fallbackErr.message.includes('API key') 
+        ? 'Invalid Gemini API key. Please check the GEMINI_API_KEY in your hosting dashboard.' 
+        : 'Failed to humanize text. Please verify API key or try again.';
+      sendEvent('error', { message: errorMsg });
       return res.end();
     }
   }
@@ -128,6 +141,12 @@ app.post('/api/humanize', async (req, res) => {
 
   if (!text || !text.trim()) {
     return res.status(400).json({ error: 'Text is required' });
+  }
+
+  if (!process.env.GEMINI_API_KEY) {
+    return res.status(500).json({ 
+      error: 'GEMINI_API_KEY is missing on your deployed server. Add GEMINI_API_KEY in your hosting dashboard under Environment Variables.' 
+    });
   }
 
   const systemInstruction = getSystemPrompt(type, tone);
